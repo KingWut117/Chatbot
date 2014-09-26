@@ -7,13 +7,14 @@ import javax.swing.JOptionPane;
 
 public class ChatbotAppController
 {
-
 	private ChatbotView appView;
 	private Chatbot mySillyChatbot;
+	
 	
 	public ChatbotAppController()
 	{
 		appView = new ChatbotView(this);
+		mySillyChatbot = new Chatbot("Dorf");
 	}
 	
 	public void start()
