@@ -1,12 +1,10 @@
 package chatbot.view;
 
 import chatbot.controller.ChatbotAppController;
-
 import javax.swing.JOptionPane;
 
 public class ChatbotView
 {
-	
 	private ChatbotAppController baseController;
 	
 	public ChatbotView(ChatbotAppController baseController)
@@ -18,7 +16,7 @@ public class ChatbotView
 	{
 		String result = "";
 		
-		JOptionPane.showMessageDialog(null, "Hello nerd, " + currentInput);
+		JOptionPane.showMessageDialog(null, "Hello, " + currentInput);
 		result = JOptionPane.showInputDialog(null, "Are you done, nerd?");
 		
 		return result;

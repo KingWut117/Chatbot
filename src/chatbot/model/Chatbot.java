@@ -33,5 +33,17 @@ public class Chatbot
 	{
 		chatCount++;
 	}
+	
+	public boolean quitChecker(String input)
+	{
+		boolean okToQuit = false;
+		
+		if(input.equalsIgnoreCase("die"))
+		{
+			okToQuit = true;
+		}
+		
+		return okToQuit;
+	}
 
 }

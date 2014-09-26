@@ -1,5 +1,6 @@
 package chatbot.controller;
 
+import chatbot.model.Chatbot;
 import chatbot.view.ChatbotView;
 
 import javax.swing.JOptionPane;
@@ -8,6 +9,7 @@ public class ChatbotAppController
 {
 
 	private ChatbotView appView;
+	private Chatbot mySillyChatbot;
 	
 	public ChatbotAppController()
 	{
@@ -18,7 +20,9 @@ public class ChatbotAppController
 	{
 		String result = appView.showChatbot("Nerd");
 		
-		if (result.equalsIgnoreCase("exit"))
+		
+		
+		if (mySillyChatbot.quitChecker(result))
 		{
 			quit();
 		}
