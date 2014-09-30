@@ -21,7 +21,10 @@ public class ChatbotAppController
 	{
 		String result = appView.showChatbot("Nerd");
 		
-		
+		while(!mySillyChatbot.quitChecker(result))
+		{
+			result = appView.showChatbot(result);
+		}
 		
 		if (mySillyChatbot.quitChecker(result))
 		{
