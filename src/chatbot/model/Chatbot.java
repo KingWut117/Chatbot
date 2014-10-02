@@ -10,7 +10,9 @@ import java.util.ArrayList;
  */
 public class Chatbot
 {
-	
+	/**
+	 * A list of Strings, will contain memes.
+	 */
 	private ArrayList<String> memeList;
 	
 	/**
@@ -29,8 +31,32 @@ public class Chatbot
 	 */
 	public Chatbot(String name)
 	{
+		memeList = new ArrayList<String>();
 		this.name = name;
 		chatCount = 0;
+		fillTheMemeList();
+	}
+	
+	/**
+	 * This can change the name of the chatbot, base on the input in Chatbot(string name)
+	 * @param name the name supplied in Chatbot
+	 */
+	public void setName(String name)
+	{
+		this.name = name;
+	}
+	
+	/**
+	 * this contains a list of memes to add to the memeList in the constructor
+	 */
+	private void fillTheMemeList()
+	{
+		memeList.add("kitties");
+		memeList.add("success kid");
+		memeList.add("I had fun once...");
+		memeList.add("doge");
+		memeList.add("ceilingCat");
+		memeList.add("Table flip!");		
 	}
 	
 	/**
@@ -60,26 +86,53 @@ public class Chatbot
 	{
 		String result = "";
 		
-		
+		if(memeChecker(currentInput))
+		{
+			result = "Wow, " + currentInput + " is a meme! Wahoo!";
+		}
+		else
+		{
+			result = "Not a meme, noob. Try again.";
+		}
 				
 		return result;
 	}
 	
-	/**
-	 * This can change the name of the chatbot, base on the input in Chatbot(string name)
-	 * @param name the name supplied in Chatbot
-	 */
-	public void setName(String name)
-	{
-		this.name = name;
-	}
-	
+
 	/**
 	 * This method increases the chatCount by 1 every time it is called.
 	 */
 	private void updateChatCount()
 	{
 		chatCount++;
+	}
+	
+	/**
+	 * Checks the input against memeList and responds if your text is a meme
+	 * @param input The current input
+	 * @return Whether it is a meme or not
+	 */
+	private boolean memeChecker(String input)
+	{
+		boolean isAMeme = false;
+				
+		for (String currentMeme : memeList)
+		{
+			if(input.equalsIgnoreCase(currentMeme))
+			{
+				isAMeme = true;
+			}
+		}
+		
+		for(int loopCounter = 0; loopCounter < memeList.size(); loopCounter++)
+		{
+			if(input.equalsIgnoreCase(memeList.get(loopCounter)))
+			{
+				isAMeme = true;
+			}
+		}
+				
+		return isAMeme;
 	}
 	
 	/**
