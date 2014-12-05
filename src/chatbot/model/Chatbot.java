@@ -2,6 +2,8 @@ package chatbot.model;
 
 import java.util.ArrayList;
 
+import chatbot.view.ChatbotUser;
+
 /**
  * The Chatbot model class. Used for checking and manipulating Strings.
  * 
@@ -20,6 +22,9 @@ public class Chatbot
 	 */
 	private String name;
 
+	/**
+	 * The String that holds the text shown in the chatbox
+	 */
 	private String contentArea;
 
 	/**
@@ -27,6 +32,11 @@ public class Chatbot
 	 * updateChatCount.
 	 */
 	private int chatCount;
+	
+	/**
+	 * The user of the chatbot as seen in ChatbotUser
+	 */
+	private ChatbotUser myUser;
 
 	/**
 	 * creates a Chatbot object with the supplied name and initializes the
@@ -40,6 +50,8 @@ public class Chatbot
 		memeList = new ArrayList<String>();
 		this.name = name;
 		chatCount = 0;
+		contentArea = "zergling";
+		myUser = new ChatbotUser();
 		fillTheMemeList();
 	}
 
@@ -53,6 +65,24 @@ public class Chatbot
 	public void setName(String name)
 	{
 		this.name = name;
+	}
+
+	/**
+	 * retrieves that data set in ChatbotUser
+	 * @return
+	 */
+	public ChatbotUser getMyUser()
+	{
+		return myUser;
+	}
+
+	/**
+	 * sets the info gained from getMyUser to myUser in Chatbot.java
+	 * @param myUser
+	 */
+	public void setMyUser(ChatbotUser myUser)
+	{
+		this.myUser = myUser;
 	}
 
 	/**
@@ -99,47 +129,140 @@ public class Chatbot
 	public String processText(String currentInput)
 	{
 		String result = "";
+		
+		if(getChatCount() < 4)
+		{
+			if(getChatCount() == 0)
+			{
+			result = "Dorf: Are you MLG bruh?";
+			myUser.setUserName(currentInput);
+			}
+			
+			else if(getChatCount() == 1)
+			{
+				if(currentInput.contains("yes"))
+				{
+					result = "Dorf: Dank! So I assume you have sweg as well?";
+					myUser.setMLG(true);
+				}
+				
+				else
+				{
+					result = "Dorf: You aren't even cool bruh. Do you even have sweg?";
+					myUser.setMLG(false);
+				}
+			}
+			
+			else if(getChatCount() == 2)
+			{
+				if(currentInput.contains("yes"))
+				{
+					result = "Dorf: Great! How many quickscopes do you get?";
+					myUser.setHasSweg(true);
+				}
+				
+				else
+				{
+					result = "Dorf: What a skrub! Quickscopes are your only redemption! How many you get?";
+					myUser.setHasSweg(false);
+				}
+			}
+			
+			else if(getChatCount() == 3)
+			{
+				if(currentInput.contains("9001"))
+				{
+					result = "Dorf: OMGZ! OVER 9000?!!? *dies*";
+					System.exit(500);
+				}
+				
+				else
+				{
+					result = "Dorf: Meh... I guess " + currentInput + " is alright...";
+					myUser.setNumberOfQuickscopes(currentInput);
+				}
+			}
 
-		int randomPosition = (int) (Math.random() * 3);
+		}
 
-		if (currentInput != null)
+		int randomPosition = (int) (Math.random() * 7);
+
+		if (currentInput != null & getChatCount() >= 4)
 		{
 
-			if (randomPosition == 0)
+			if(randomPosition == 0)
 			{
 				if (stringLengthChecker(currentInput))
 				{
-					result = "Ughh... You talk a lot.";
-				} else
+					result = "Dorf: Ughh... You talk a lot.";
+				} 
+				else
 				{
-					result = "I like how you don't mince words!";
+					result = "Dorf: I like how you don't mince words!";
 				}
 
 			}
 
-			else if (randomPosition == 1)
+			else if(randomPosition == 1)
 			{
 				if (contentChecker(currentInput))
 				{
-					result = "Gotta love them zergling rushes!";
-				} else
+					result = "Dorf: Gotta love them zergling rushes!";
+				} 
+				else
 				{
-					result = "What do you think about the game StarCraft?";
+					result = "Dorf: What do you think about the game StarCraft?";
 				}
 			}
 
-			else
+			else if(randomPosition == 2)
 			{
 				if (memeChecker(currentInput))
 				{
-					result = "Wow, " + currentInput + " is a meme! Wahoo!";
-				} else
+					result = "Dorf: Wow, " + currentInput + " is a meme! Wahoo!";
+				} 
+				else
 				{
-					result = "Not a meme, noob. Try again.";
+					result = "Dorf: Not a meme, noob. Try again.";
 				}
 			}
+			
+			else if(randomPosition == 3)
+			{
+				result = "Dorf: " + myUser.getUserName() + " is a pretty nice name... I guess.";
+			}
+			
+			else if(randomPosition == 4)
+			{
+				if(myUser.isMLG())
+				{
+					result = "Dorf: So, have you won any MLG tournaments?";
+				}
+				else
+				{
+					result = "Dorf: You should be MLG";
+				}
+			}
+			
+			else if(randomPosition == 5)
+			{
+				if(myUser.hasSweg())
+				{
+					result = "Sweg Dorf: Sweg bruh, sweg. Swegswegswegswegswegsweg.";
+				}
+				else
+				{
+					result = "Sweg Dorf: Sorry, I only hang with ppl who has sweg.";
+					System.exit(500);
+				}
+			}
+			
+			else
+			{
+				result = "Dorf: Braeden is awesome.";
+			}
 		}
-
+		updateChatCount();
 		return result;
 	}
 
@@ -151,6 +274,11 @@ public class Chatbot
 		chatCount++;
 	}
 
+	/**
+	 * checks the length of the user input for use in processText
+	 * @param input
+	 * @return
+	 */
 	private boolean stringLengthChecker(String input)
 	{
 		boolean isLong = false;
@@ -163,11 +291,16 @@ public class Chatbot
 		return isLong;
 	}
 
+	/**
+	 * 
+	 * @param input
+	 * @return
+	 */
 	private boolean contentChecker(String input)
 	{
 		boolean hasContent = false;
 
-		if (input.contains("zergling"))
+		if (input.contains(contentArea))
 		{
 			hasContent = true;
 

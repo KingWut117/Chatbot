@@ -1,7 +1,10 @@
 package chatbot.controller;
 
 import chatbot.model.Chatbot;
+import chatbot.view.ChatbotFrame;
+import chatbot.view.ChatbotPanel;
 import chatbot.view.ChatbotView;
+
 import javax.swing.JOptionPane;
 
 /**
@@ -11,11 +14,39 @@ import javax.swing.JOptionPane;
  */
 public class ChatbotAppController
 {
+	/**
+	 * The instance of the ChatbotView, View of the app
+	 */
 	private ChatbotView appView;
+	
+	/**
+	 * The instance of the Chatbot, the Model
+	 */
 	private Chatbot mySillyChatbot;
+	
+	/**
+	 * retrieves the baseFrame
+	 * @return
+	 */
+	public ChatbotFrame getBaseFrame()
+	{
+		return baseFrame;
+	}
+
+	/**
+	 * The message used when starting the app
+	 */
 	private String startMessage;
+	
+	/**
+	 * Message provided when the user quits the app
+	 */
 	private String quitMessage;
 	
+	/**
+	 * Reference to the GUI JFrame object for the app
+	 */
+	private ChatbotFrame baseFrame;
 	
 	/**
 	 * Builds the controller. (constructor)
@@ -23,11 +54,16 @@ public class ChatbotAppController
 	public ChatbotAppController()
 	{
 		appView = new ChatbotView(this);
+		baseFrame = new ChatbotFrame(this);
 		mySillyChatbot = new Chatbot("Dorf");
 		startMessage = "Welcome to the " + mySillyChatbot.getName() + " chatbot. What is your name?";
-		quitMessage = "I... Die...";
+		quitMessage = mySillyChatbot.getName() + ": I... Die...";
 	}
 	
+	/**
+	 * retrieves the name of the chatbot
+	 * @return
+	 */
 	public Chatbot getMySillyChatbot()
 	{
 		return mySillyChatbot;
@@ -38,14 +74,27 @@ public class ChatbotAppController
 	 */
 	public void start()
 	{
-		String result = appView.showChatbotDialog(startMessage);
+		//String result = appView.showChatbotDialog(startMessage);
 		
-		while(!mySillyChatbot.quitChecker(result))
-		{
-			result = mySillyChatbot.processText(result);
-			result = appView.showChatbotDialog(result);
-		}		
-		quit();		
+		((ChatbotPanel) baseFrame.getContentPane()).showTextMessage(startMessage);
+		
+		//ChatbotPanel testPanel = (ChatbotPanel) baseFrame.getContentPane();
+		
+				
+	}
+	
+	/**
+	 * this method sets the Chatbot's response to the userinput by running processText in Chatbot
+	 * @param input
+	 * @return
+	 */
+	public String getChatbotDialog(String input)
+	{
+		String result = "";
+		
+		result = mySillyChatbot.processText(input);
+		
+		return result;
 	}
 	
 	/**
